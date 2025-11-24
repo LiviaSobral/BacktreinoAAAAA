@@ -4,13 +4,17 @@ import { User } from '../entities/User'
 export class UserService {
     private repo = AppDataSource.getRepository(User)
 
-    async create(user:User) {
-        const exists = await this.findByEmail(user.email)
-        if (exists) throw new Error('E-mail já cadastrado')
-        const user2 = this.repo.create(user)
-        const user3: any = await this.repo.save(user2);
-        delete user3.password
-        return user3
+    async create(data:Partial<User>) {
+        const exists = await this.repo.findOne({where:{email:data.email}})
+        if(exists){
+            throw new Error("Email ja utilizado")
+        }
+        const user = this.repo.create(data)
+        await this.repo.save(user)
+        const clone:any = user
+        delete clone.password
+        delete clone.cpf
+        return clone
     }
 
     async findAll() {
@@ -38,7 +42,8 @@ export class UserService {
         }
         const { password, ...rest } = data
         Object.assign(user, rest)
-        return await this.repo.save(user)
+        await this.repo.save(user)
+        return rest
     }
 
 
@@ -51,7 +56,6 @@ export class UserService {
 
     async findByEmail(email: string) {
         const user:any = await this.repo.findOne({ where: { email } })
-        delete user.password
         return user
     }
 }

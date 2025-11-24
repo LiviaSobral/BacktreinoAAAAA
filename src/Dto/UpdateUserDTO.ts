@@ -47,9 +47,10 @@ export class UpdateUserDTO {
     @Max(120, { message: "Idade máxima é 120 anos" })
     age: number;
 
+    @IsOptional()
     @IsNotEmpty({ message: "A data da última doação é obrigatória" })
     @IsDateString({}, { message: "A data deve estar no formato ISO: YYYY-MM-DD" })
-    lastDonation: Date;
+    lastDonation?: Date;
 
     @IsNotEmpty({ message: "A senha não pode ser vazia" })
     @Matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/, {

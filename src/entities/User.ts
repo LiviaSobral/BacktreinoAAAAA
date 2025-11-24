@@ -15,6 +15,9 @@ export class User {
     @Column()
     email:string
 
+    @Column({ length: 11 })
+    cpf:string
+
     @Column({nullable:true})
     bloodType?: string
 
@@ -24,8 +27,8 @@ export class User {
     @Column()
     age:number
 
-    @Column({type:"date"})
-    lastDonation:Date
+    @Column({type:"date", nullable:true})
+    lastDonation?:Date
 
     @Column()
     password: string

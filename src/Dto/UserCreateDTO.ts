@@ -9,7 +9,8 @@ import {
     Min,
     Max,
     IsDateString,
-    Length
+    Length,
+    isNotEmpty
 } from "class-validator";
 
 export class CreateUserDTO {
@@ -35,6 +36,10 @@ export class CreateUserDTO {
     })
     bloodType?: string;
 
+    @IsNotEmpty({ message: "tem q ter cpf"})
+    @Length(11,11, {message:"Cpf precisa ter exatamente 11 characteres"})
+    cpf:string
+
     @IsNotEmpty({ message: "O peso não pode ser vazio" })
     @IsNumber({}, { message: "Peso deve ser um número" })
     @Min(50, { message: "Peso mínimo é 50 kg" })
@@ -49,7 +54,8 @@ export class CreateUserDTO {
 
     @IsNotEmpty({ message: "A data da última doação é obrigatória" })
     @IsDateString({}, { message: "A data deve estar no formato ISO: YYYY-MM-DD" })
-    lastDonation: Date;
+    @IsOptional()
+    lastDonation?: Date;
 
     @IsNotEmpty({ message: "A senha não pode ser vazia" })
     @Matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/, {
