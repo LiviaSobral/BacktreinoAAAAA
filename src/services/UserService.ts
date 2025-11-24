@@ -49,7 +49,9 @@ export class UserService {
         return { message: 'Usuário removido' }
     }
 
-    private async findByEmail(email: string) {
-        return this.repo.findOne({ where: { email } })
+    async findByEmail(email: string) {
+        const user:any = await this.repo.findOne({ where: { email } })
+        delete user.password
+        return user
     }
 }
