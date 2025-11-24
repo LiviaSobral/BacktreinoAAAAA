@@ -1,7 +1,5 @@
 import app from '../src/app'
 
-// tirar comentarios depois de fazer o data source
-
 import { AppDataSource } from './config/data-source'
 
 const PORT = process.env.PORT || 3000

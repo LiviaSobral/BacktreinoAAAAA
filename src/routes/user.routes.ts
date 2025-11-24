@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { UserController } from '../controller/UserController'
 import { authMiddleware } from '../middleware/AuthMiddleware'
 import { validateDTO } from '../middleware/ValidateDTO'
-import { UpdateUserDTO } from '../dtos/UpdateUserDTO'
+import { UpdateUserDTO } from '../dto/UpdateUserDTO'
 
 const router = Router()
 const controller = new UserController()
